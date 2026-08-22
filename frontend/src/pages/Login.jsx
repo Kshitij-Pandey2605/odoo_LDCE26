@@ -39,12 +39,12 @@ const Login = () => {
       {/* Left Column - Image Showcase */}
       <div className="hidden lg:flex lg:w-[45%] relative bg-slate-900 overflow-hidden">
         <img 
-          src="https://images.unsplash.com/photo-1599661559905-2453883a9d70?q=80&w=2573&auto=format&fit=crop" 
-          alt="Hawa Mahal, Jaipur, India" 
-          className="absolute inset-0 w-full h-full object-cover"
+          src="https://images.pexels.com/photos/1007427/pexels-photo-1007427.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+          alt="Indian Heritage" 
+          className="absolute inset-0 w-full h-full object-cover z-0"
         />
         {/* Subtle gradient overlay to make text readable */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-0"></div>
         
         {/* Dotted curve overlay decoration (approximated with CSS) */}
         <svg className="absolute inset-0 w-full h-full z-0 opacity-40 pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
