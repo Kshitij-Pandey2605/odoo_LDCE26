@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
-import { Eye, EyeOff, Lock, Mail, User, ArrowRight } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 
 const Signup = () => {
   const { signup } = useAuth();
@@ -89,106 +89,123 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Background gradients */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-brand-secondary/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-brand-accent/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+    <div className="min-h-screen flex font-sans">
+      {/* Left Column - Image Showcase */}
+      <div className="hidden lg:flex lg:w-[45%] relative bg-slate-900 overflow-hidden">
+        <img 
+          src="https://images.pexels.com/photos/1007427/pexels-photo-1007427.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+          alt="Indian Heritage" 
+          className="absolute inset-0 w-full h-full object-cover z-0"
+        />
+        {/* Subtle gradient overlay to make text readable */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-0"></div>
+        
+        {/* Dotted curve overlay decoration (approximated with CSS) */}
+        <svg className="absolute inset-0 w-full h-full z-0 opacity-40 pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <path d="M0,70 Q25,80 50,65 T100,20" fill="none" stroke="white" strokeWidth="0.2" strokeDasharray="1 1" />
+          <circle cx="20" cy="72" r="0.8" fill="white" />
+          <circle cx="80" cy="40" r="0.8" fill="white" />
+        </svg>
 
-      <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-2xl shadow-premium relative z-10 border border-slate-100">
-        <div>
-          <img src="/logo.png" alt="GlobeTrotter Logo" className="h-14 w-14 object-contain mx-auto mb-3 rounded-xl shadow-md" />
-          <h2 className="mt-2 text-center text-3xl font-extrabold text-brand-dark tracking-tight">
-            Create an account
-          </h2>
-          <p className="mt-2 text-center text-sm text-slate-500">
-            Already have an account?{' '}
-            <Link to="/login" className="font-semibold text-brand-secondary hover:text-brand-primary transition-colors">
-              Sign in instead
-            </Link>
+        {/* Text content overlay */}
+        <div className="absolute bottom-16 left-12 right-12 z-10 text-white pr-12">
+          <h1 className="text-5xl font-serif font-bold mb-4 leading-tight tracking-tight shadow-sm">
+            Begin Your Journey
+          </h1>
+          <p className="text-lg text-slate-100 font-medium">
+            Join the ultimate premium concierge for curating unforgettable experiences across the subcontinent.
           </p>
         </div>
+        
+        {/* Browser title-like branding */}
+        <div className="absolute top-6 left-6 flex items-center text-white/90 z-10 text-sm font-semibold">
+           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+           </svg>
+           Login / Signup - GlobeTrotter India
+        </div>
+      </div>
 
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="space-y-4">
+      {/* Right Column - Form Container */}
+      <div className="w-full lg:w-[55%] flex items-center justify-center bg-[#FFF7ED] p-6 sm:p-12 overflow-y-auto">
+        <div className="w-full max-w-md bg-white p-10 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100/50 my-auto">
+          
+          <h2 className="text-3xl font-serif font-bold text-[#0F172A] tracking-tight">
+            Create an Account <span className="inline-block animate-wave origin-bottom-right">✨</span>
+          </h2>
+          <p className="text-[#64748B] text-sm mt-2 mb-6">
+            Sign up to start planning your premium trips.
+          </p>
+
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            {/* Name Field */}
             <div>
-              <label htmlFor="name" className="block text-sm font-semibold text-slate-700 mb-1">
+              <label htmlFor="name" className="block text-xs font-bold text-[#0F172A] tracking-wide uppercase mb-1.5">
                 Full Name
               </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <User className="h-5 w-5 text-slate-400" />
-                </div>
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 rounded-xl bg-slate-50 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-secondary/20 focus:border-brand-secondary focus:bg-white transition-all text-sm"
-                  placeholder="John Doe"
-                />
-              </div>
+              <input
+                id="name"
+                type="text"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="John Doe"
+                className="w-full px-4 py-3 bg-[#FFF7ED]/50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316]/20 focus:border-[#F97316] transition-colors text-[#0F172A] placeholder-slate-400"
+              />
             </div>
 
+            {/* Email Field */}
             <div>
-              <label htmlFor="email-address" className="block text-sm font-semibold text-slate-700 mb-1">
+              <label htmlFor="email" className="block text-xs font-bold text-[#0F172A] tracking-wide uppercase mb-1.5">
                 Email Address
               </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-slate-400" />
-                </div>
-                <input
-                  id="email-address"
-                  name="email"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 rounded-xl bg-slate-50 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-secondary/20 focus:border-brand-secondary focus:bg-white transition-all text-sm"
-                  placeholder="name@example.com"
-                />
-              </div>
+              <input
+                id="email"
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="name@example.com"
+                className="w-full px-4 py-3 bg-[#FFF7ED]/50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316]/20 focus:border-[#F97316] transition-colors text-[#0F172A] placeholder-slate-400"
+              />
             </div>
 
+            {/* Password Field */}
             <div>
-              <label htmlFor="password" className="block text-sm font-semibold text-slate-700 mb-1">
-                Password
-              </label>
+              <div className="flex justify-between items-center mb-1.5">
+                <label htmlFor="password" className="block text-xs font-bold text-[#0F172A] tracking-wide uppercase">
+                  Password
+                </label>
+              </div>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-slate-400" />
-                </div>
                 <input
                   id="password"
-                  name="password"
                   type={showPassword ? 'text' : 'password'}
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pl-10 pr-10 py-2.5 border border-slate-200 rounded-xl bg-slate-50 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-secondary/20 focus:border-brand-secondary focus:bg-white transition-all text-sm"
                   placeholder="••••••••"
+                  className="w-full px-4 py-3 bg-[#FFF7ED]/50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316]/20 focus:border-[#F97316] transition-colors text-[#0F172A] placeholder-slate-400 pr-10"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 transition-colors"
                 >
-                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
-
+              
               {/* Password strength indicator */}
               {password && (
-                <div className="mt-2">
+                <div className="mt-2 pl-1">
                   <div className="flex justify-between items-center mb-1">
-                    <span className="text-xs text-slate-400">Password Strength:</span>
-                    <span className={`text-xs font-semibold ${passwordStrength.color.replace('bg-', 'text-')}`}>
+                    <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Strength</span>
+                    <span className={`text-[10px] font-bold uppercase tracking-wider ${passwordStrength.color.replace('bg-', 'text-')}`}>
                       {passwordStrength.text}
                     </span>
                   </div>
-                  <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                  <div className="w-full h-1 bg-slate-200 rounded-full overflow-hidden">
                     <div
                       className={`h-full ${passwordStrength.color} transition-all duration-300`}
                       style={{ width: `${(passwordStrength.score / 5) * 100}%` }}
@@ -198,44 +215,74 @@ const Signup = () => {
               )}
             </div>
 
+            {/* Confirm Password Field */}
             <div>
-              <label htmlFor="confirm-password" className="block text-sm font-semibold text-slate-700 mb-1">
-                Confirm Password
-              </label>
+              <div className="flex justify-between items-center mb-1.5">
+                <label htmlFor="confirm-password" className="block text-xs font-bold text-[#0F172A] tracking-wide uppercase">
+                  Confirm Password
+                </label>
+              </div>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-slate-400" />
-                </div>
                 <input
                   id="confirm-password"
-                  name="confirm-password"
                   type="password"
                   required
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 rounded-xl bg-slate-50 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-secondary/20 focus:border-brand-secondary focus:bg-white transition-all text-sm"
                   placeholder="••••••••"
+                  className="w-full px-4 py-3 bg-[#FFF7ED]/50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316]/20 focus:border-[#F97316] transition-colors text-[#0F172A] placeholder-slate-400"
                 />
               </div>
             </div>
-          </div>
 
-          <div>
+            {/* Submit Button */}
+            <div className="pt-3">
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-[#C84F14] hover:bg-[#A93D0E] text-white py-3.5 rounded-xl text-sm font-bold shadow-md shadow-[#C84F14]/20 transition-all disabled:opacity-70 flex items-center justify-center"
+              >
+                {loading ? (
+                  <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                ) : (
+                  'Create Account'
+                )}
+              </button>
+            </div>
+            
+            {/* Divider */}
+            <div className="relative py-2 flex items-center">
+              <div className="flex-grow border-t border-slate-100"></div>
+              <span className="flex-shrink-0 mx-4 text-[10px] font-bold tracking-widest text-slate-400 uppercase">
+                Or Continue With
+              </span>
+              <div className="flex-grow border-t border-slate-100"></div>
+            </div>
+
+            {/* Google Signup */}
             <button
-              type="submit"
-              disabled={loading}
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-xl text-white bg-brand-primary hover:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary disabled:opacity-50 disabled:cursor-not-allowed hover-lift shadow-premium transition-all"
+              type="button"
+              className="w-full bg-white border border-slate-200 hover:bg-slate-50 text-[#0F172A] py-3 rounded-xl text-sm font-semibold transition-colors flex items-center justify-center gap-3"
             >
-              {loading ? (
-                <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
-              ) : (
-                <span className="flex items-center gap-2">
-                  Create Account <ArrowRight className="h-4 w-4" />
-                </span>
-              )}
+              <svg className="w-5 h-5" viewBox="0 0 24 24">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
+                <path d="M1 1h22v22H1z" fill="none" />
+              </svg>
+              Google
             </button>
-          </div>
-        </form>
+
+            {/* Login Link */}
+            <p className="text-center text-xs text-[#64748B] mt-6 pb-2">
+              Already have an account?{' '}
+              <Link to="/login" className="text-[#C84F14] font-bold hover:underline underline-offset-2">
+                Sign In
+              </Link>
+            </p>
+          </form>
+        </div>
       </div>
     </div>
   );

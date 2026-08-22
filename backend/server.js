@@ -1,10 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import helmet from 'helmet';
-import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
-import swaggerUi from 'swagger-ui-express';
-import { swaggerSpec } from './docs/swagger.js';
 
 // Import Routes
 import authRoutes from './routes/auth.js';
@@ -25,26 +21,12 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Security & Rate Limiting Middlewares
-app.use(helmet());
+// Middleware
 app.use(cors({
-  origin: '*', // Restrict in production
+  origin: '*', // We can restrict this in production
   credentials: true,
 }));
-
-const apiLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 200, // Limit each IP to 200 requests per window
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: { success: false, message: 'Too many requests, please try again later.' },
-});
-app.use('/api/', apiLimiter);
-
 app.use(express.json());
-
-// Swagger API Documentation UI
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Mount API Routes
 app.use('/api/auth', authRoutes);
@@ -62,25 +44,15 @@ app.use('/api/ai', aiRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
-  res.json({
-    status: 'ok',
-    message: 'GlobeTrotter API Server is running',
-    timestamp: new Date().toISOString(),
-    swagger: '/api-docs',
-  });
+  res.json({ status: 'ok', message: 'GlobeTrotter API Server is running' });
 });
 
-// Centralized Error handling middleware
+// Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(err.status || 500).json({
-    success: false,
-    message: err.message || 'Something went wrong on the server!',
-    errors: err.errors || [],
-  });
+  res.status(500).json({ error: 'Something went wrong on the server!' });
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 GlobeTrotter Server running on port ${PORT}`);
-  console.log(`📚 Swagger Documentation UI: http://localhost:${PORT}/api-docs`);
+  console.log(`GlobeTrotter Server running on port ${PORT}`);
 });

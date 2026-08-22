@@ -39,12 +39,12 @@ const Login = () => {
       {/* Left Column - Image Showcase */}
       <div className="hidden lg:flex lg:w-[45%] relative bg-slate-900 overflow-hidden">
         <img 
-          src="https://images.unsplash.com/photo-1599661559905-2453883a9d70?q=80&w=2573&auto=format&fit=crop" 
-          alt="Hawa Mahal, Jaipur, India" 
-          className="absolute inset-0 w-full h-full object-cover"
+          src="https://images.pexels.com/photos/1007427/pexels-photo-1007427.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+          alt="Indian Heritage" 
+          className="absolute inset-0 w-full h-full object-cover z-0"
         />
         {/* Subtle gradient overlay to make text readable */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-0"></div>
         
         {/* Dotted curve overlay decoration (approximated with CSS) */}
         <svg className="absolute inset-0 w-full h-full z-0 opacity-40 pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -76,11 +76,6 @@ const Login = () => {
       <div className="w-full lg:w-[55%] flex items-center justify-center bg-[#FFF7ED] p-6 sm:p-12">
         <div className="w-full max-w-md bg-white p-10 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100/50">
           
-          <div className="flex items-center gap-3 mb-6">
-            <img src="/logo.png" alt="GlobeTrotter Logo" className="h-12 w-12 object-contain rounded-xl shadow-md" />
-            <span className="text-2xl font-extrabold text-[#431407] tracking-tight">GlobeTrotter</span>
-          </div>
-
           <h2 className="text-3xl font-serif font-bold text-[#0F172A] tracking-tight">
             Welcome Back <span className="inline-block animate-wave origin-bottom-right">👋</span>
           </h2>

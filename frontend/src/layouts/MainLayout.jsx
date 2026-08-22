@@ -33,8 +33,8 @@ const MainLayout = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
-              <Link to="/dashboard" className="flex items-center gap-2.5 text-xl font-extrabold text-brand-dark tracking-tight">
-                <img src="/logo.png" alt="GlobeTrotter Logo" className="h-9 w-9 object-contain rounded-lg shadow-sm" />
+              <Link to="/dashboard" className="flex items-center gap-2 text-xl font-extrabold text-brand-dark tracking-tight">
+                <span className="text-2xl">✈️</span>
                 <span>GlobeTrotter</span>
               </Link>
               <div className="hidden md:flex ml-10 space-x-1">
