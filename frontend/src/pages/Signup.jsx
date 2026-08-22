@@ -96,7 +96,7 @@ const Signup = () => {
 
       <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-2xl shadow-premium relative z-10 border border-slate-100">
         <div>
-          <div className="flex justify-center text-4xl mb-2">✈️</div>
+          <img src="/logo.png" alt="GlobeTrotter Logo" className="h-14 w-14 object-contain mx-auto mb-3 rounded-xl shadow-md" />
           <h2 className="mt-2 text-center text-3xl font-extrabold text-brand-dark tracking-tight">
             Create an account
           </h2>

@@ -123,8 +123,8 @@ const SharedItinerary = () => {
     <div className="min-h-screen bg-slate-50 flex flex-col justify-between">
       {/* Top Navbar */}
       <nav className="bg-white border-b border-slate-100 py-4 px-6 flex justify-between items-center sticky top-0 z-40 shadow-sm">
-        <Link to="/dashboard" className="flex items-center gap-2 text-lg font-extrabold text-brand-dark tracking-tight">
-          <span className="text-xl">✈️</span>
+        <Link to="/dashboard" className="flex items-center gap-2.5 text-lg font-extrabold text-brand-dark tracking-tight">
+          <img src="/logo.png" alt="GlobeTrotter Logo" className="h-8 w-8 object-contain rounded-lg shadow-sm" />
           <span>GlobeTrotter</span>
         </Link>
         {isAuthenticated ? (

@@ -76,6 +76,11 @@ const Login = () => {
       <div className="w-full lg:w-[55%] flex items-center justify-center bg-[#FFF7ED] p-6 sm:p-12">
         <div className="w-full max-w-md bg-white p-10 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100/50">
           
+          <div className="flex items-center gap-3 mb-6">
+            <img src="/logo.png" alt="GlobeTrotter Logo" className="h-12 w-12 object-contain rounded-xl shadow-md" />
+            <span className="text-2xl font-extrabold text-[#431407] tracking-tight">GlobeTrotter</span>
+          </div>
+
           <h2 className="text-3xl font-serif font-bold text-[#0F172A] tracking-tight">
             Welcome Back <span className="inline-block animate-wave origin-bottom-right">👋</span>
           </h2>

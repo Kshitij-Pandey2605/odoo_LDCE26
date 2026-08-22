@@ -104,10 +104,11 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider value={value}>
       {!loading ? children : (
-        <div className="min-h-screen flex items-center justify-center bg-brand-light">
+        <div className="min-h-screen flex items-center justify-center bg-[#FFF7ED]">
           <div className="flex flex-col items-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-secondary"></div>
-            <p className="mt-4 text-sm text-slate-500 font-medium animate-pulse">Loading GlobeTrotter...</p>
+            <img src="/logo.png" alt="GlobeTrotter Logo" className="h-16 w-16 object-contain mb-4 animate-pulse rounded-2xl shadow-lg" />
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#F97316]"></div>
+            <p className="mt-4 text-sm font-semibold text-[#431407] animate-pulse">Loading GlobeTrotter...</p>
           </div>
         </div>
       )}

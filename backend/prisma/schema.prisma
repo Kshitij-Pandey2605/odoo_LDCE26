@@ -8,17 +8,18 @@ generator client {
 }
 
 model User {
-  id               String             @id @default(uuid())
-  name             String
-  email            String             @unique
-  password         String
-  profileImage     String?            @map("profile_image")
-  language         String             @default("en")
-  role             String             @default("USER")
-  createdAt        DateTime           @default(now()) @map("created_at")
-  trips            Trip[]             @relation("UserTrips")
+  id                String             @id @default(uuid())
+  name              String
+  email             String             @unique
+  password          String
+  profileImage      String?            @map("profile_image")
+  language          String             @default("en")
+  role              String             @default("USER")
+  createdAt         DateTime           @default(now()) @map("created_at")
+  trips             Trip[]             @relation("UserTrips")
   savedDestinations SavedDestination[]
-  tripMembers      TripMember[]
+  tripMembers       TripMember[]
+  aiPlans           AIGeneratedPlan[]
 
   @@map("users")
 }
@@ -31,12 +32,12 @@ model Trip {
   startDate        DateTime           @map("start_date")
   endDate          DateTime           @map("end_date")
   coverImage       String?            @map("cover_image")
-  tripType         String             @map("trip_type") // Solo, Couple, Friends, Family, Business
-  travelStyle      String             @map("travel_style") // Adventure, Budget, Luxury, Food, Culture, Relaxation
-  budget           Float
+  tripType         String             @default("Solo") @map("trip_type") // Solo, Couple, Friends, Family, Business
+  travelStyle      String             @default("Balanced") @map("travel_style") // Adventure, Budget, Luxury, Food, Culture, Relaxation
+  budget           Float              @default(0.0)
   isPublic         Boolean            @default(false) @map("is_public")
   shareToken       String?            @unique @map("share_token")
-  status           String             @default("Draft") // Draft, Upcoming, Ongoing, Completed
+  status           String             @default("Draft") @map("status") // Draft, Upcoming, Ongoing, Completed
   createdAt        DateTime           @default(now()) @map("created_at")
   
   owner            User               @relation("UserTrips", fields: [userId], references: [id], onDelete: Cascade)
@@ -52,10 +53,10 @@ model City {
   id               String             @id @default(uuid())
   name             String
   country          String
-  region           String
+  region           String             @default("")
   description      String
   image            String
-  costIndex        Int                @map("cost_index") // 1 to 5
+  costIndex        Int                @default(1) @map("cost_index") // 1 to 5
   popularity       Float              @default(0.0)
   latitude         Float
   longitude        Float
@@ -72,7 +73,7 @@ model TripStop {
   cityId           String             @map("city_id")
   startDate        DateTime           @map("start_date")
   endDate          DateTime           @map("end_date")
-  sequence         Int
+  sequence         Int                @default(1)
 
   trip             Trip               @relation(fields: [tripId], references: [id], onDelete: Cascade)
   city             City               @relation(fields: [cityId], references: [id], onDelete: Cascade)
@@ -164,4 +165,16 @@ model TripMember {
 
   @@unique([tripId, userId])
   @@map("trip_members")
+}
+
+model AIGeneratedPlan {
+  id               String             @id @default(uuid())
+  userId           String             @map("user_id")
+  prompt           String
+  response         String
+  createdAt        DateTime           @default(now()) @map("created_at")
+
+  user             User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("ai_generated_plans")
 }
