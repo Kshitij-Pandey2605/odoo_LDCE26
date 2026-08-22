@@ -1,0 +1,167 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id               String             @id @default(uuid())
+  name             String
+  email            String             @unique
+  password         String
+  profileImage     String?            @map("profile_image")
+  language         String             @default("en")
+  role             String             @default("USER")
+  createdAt        DateTime           @default(now()) @map("created_at")
+  trips            Trip[]             @relation("UserTrips")
+  savedDestinations SavedDestination[]
+  tripMembers      TripMember[]
+
+  @@map("users")
+}
+
+model Trip {
+  id               String             @id @default(uuid())
+  userId           String             @map("user_id")
+  name             String
+  description      String?
+  startDate        DateTime           @map("start_date")
+  endDate          DateTime           @map("end_date")
+  coverImage       String?            @map("cover_image")
+  tripType         String             @map("trip_type") // Solo, Couple, Friends, Family, Business
+  travelStyle      String             @map("travel_style") // Adventure, Budget, Luxury, Food, Culture, Relaxation
+  budget           Float
+  isPublic         Boolean            @default(false) @map("is_public")
+  shareToken       String?            @unique @map("share_token")
+  status           String             @default("Draft") // Draft, Upcoming, Ongoing, Completed
+  createdAt        DateTime           @default(now()) @map("created_at")
+  
+  owner            User               @relation("UserTrips", fields: [userId], references: [id], onDelete: Cascade)
+  stops            TripStop[]
+  expenses         Expense[]
+  packingItems     PackingItem[]
+  members          TripMember[]
+
+  @@map("trips")
+}
+
+model City {
+  id               String             @id @default(uuid())
+  name             String
+  country          String
+  region           String
+  description      String
+  image            String
+  costIndex        Int                @map("cost_index") // 1 to 5
+  popularity       Float              @default(0.0)
+  latitude         Float
+  longitude        Float
+  stops            TripStop[]
+  savedBy          SavedDestination[]
+  activities       Activity[]
+
+  @@map("cities")
+}
+
+model TripStop {
+  id               String             @id @default(uuid())
+  tripId           String             @map("trip_id")
+  cityId           String             @map("city_id")
+  startDate        DateTime           @map("start_date")
+  endDate          DateTime           @map("end_date")
+  sequence         Int
+
+  trip             Trip               @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  city             City               @relation(fields: [cityId], references: [id], onDelete: Cascade)
+  activities       TripActivity[]
+
+  @@map("trip_stops")
+}
+
+model Activity {
+  id               String             @id @default(uuid())
+  cityId           String             @map("city_id")
+  name             String
+  description      String
+  category         String             // Sightseeing, Food, Adventure, Nature, Culture, Shopping, Nightlife
+  duration         Int                // in minutes
+  estimatedCost    Float              @map("estimated_cost")
+  image            String?
+  latitude         Float
+  longitude        Float
+
+  city             City               @relation(fields: [cityId], references: [id], onDelete: Cascade)
+  tripActivities   TripActivity[]
+
+  @@map("activities")
+}
+
+model TripActivity {
+  id               String             @id @default(uuid())
+  tripStopId       String             @map("trip_stop_id")
+  activityId       String?            @map("activity_id") // Nullable for custom activities
+  customName       String?            @map("custom_name") // Used if activityId is null
+  customCost       Float?             @map("custom_cost") // Used if activityId is null
+  date             DateTime
+  startTime        String             @map("start_time") // HH:MM (e.g. "10:00")
+  endTime          String             @map("end_time")   // HH:MM (e.g. "13:00")
+  notes            String?
+
+  tripStop         TripStop           @relation(fields: [tripStopId], references: [id], onDelete: Cascade)
+  activity         Activity?          @relation(fields: [activityId], references: [id], onDelete: SetNull)
+
+  @@map("trip_activities")
+}
+
+model Expense {
+  id               String             @id @default(uuid())
+  tripId           String             @map("trip_id")
+  category         String             // Transport, Accommodation, Food, Activities, Other
+  amount           Float
+  description      String
+  date             DateTime
+
+  trip             Trip               @relation(fields: [tripId], references: [id], onDelete: Cascade)
+
+  @@map("expenses")
+}
+
+model SavedDestination {
+  id               String             @id @default(uuid())
+  userId           String             @map("user_id")
+  cityId           String             @map("city_id")
+
+  user             User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  city             City               @relation(fields: [cityId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, cityId])
+  @@map("saved_destinations")
+}
+
+model PackingItem {
+  id               String             @id @default(uuid())
+  tripId           String             @map("trip_id")
+  name             String
+  category         String             // Clothes, Electronics, Documents, Health, Accessories
+  isPacked         Boolean            @default(false) @map("is_packed")
+
+  trip             Trip               @relation(fields: [tripId], references: [id], onDelete: Cascade)
+
+  @@map("packing_items")
+}
+
+model TripMember {
+  id               String             @id @default(uuid())
+  tripId           String             @map("trip_id")
+  userId           String             @map("user_id")
+  role             String             @default("VIEWER") // OWNER, EDITOR, VIEWER
+
+  trip             Trip               @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  user             User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([tripId, userId])
+  @@map("trip_members")
+}
