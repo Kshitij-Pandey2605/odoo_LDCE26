@@ -19,6 +19,7 @@ import TripDetails from './pages/TripDetails';
 import TripBudget from './pages/TripBudget';
 import SharedItinerary from './pages/SharedItinerary';
 import Profile from './pages/Profile';
+import TripCalendar from './pages/TripCalendar';
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
                 <Route path="/trips/:tripId/budget" element={<TripBudget />} />
                 <Route path="/cities" element={<CitySearch />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/calendar" element={<TripCalendar />} />
               </Route>
             </Route>
 
