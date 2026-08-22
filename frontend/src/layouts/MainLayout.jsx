@@ -42,9 +42,8 @@ const MainLayout = () => {
           <div className="flex justify-between h-16 items-center">
             
             <div className="flex items-center">
-              <Link to="/dashboard" className="flex items-center gap-2 text-xl font-extrabold text-[#0F172A] tracking-tight">
-                <span className="text-[#F97316]">🌍</span>
-                <span>GlobeTrotter</span>
+              <Link to="/dashboard" className="flex items-center gap-2 h-8">
+                <img src="/logo.png" alt="GlobeTrotter Logo" className="h-full object-contain" />
               </Link>
               
               <div className="hidden md:flex ml-10 space-x-1">
@@ -155,9 +154,8 @@ const MainLayout = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="space-y-4">
-              <div className="flex items-center gap-2 text-lg font-extrabold text-[#0F172A]">
-                <span className="text-[#F97316]">🌍</span>
-                <span>GlobeTrotter</span>
+              <div className="flex items-center gap-2 h-7">
+                <img src="/logo.png" alt="GlobeTrotter Logo" className="h-full object-contain" />
               </div>
               <p className="text-xs text-[#94A3B8] leading-relaxed">
                 Creating authentic Indian experiences with modern precision. Your ultimate companion for the sub-continent.
